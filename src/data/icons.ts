@@ -9,6 +9,7 @@ export interface DesktopIconData {
   id: string;
   label: string;
   Icon: IconComponent;
+  items?: DesktopIconData[];
 }
 
 export const desktopIcons: DesktopIconData[] = [
@@ -36,5 +37,5 @@ export const desktopIcons: DesktopIconData[] = [
     id: 'blog',
     label: 'Blog',
     Icon: Write1 as IconComponent
-  },
+  }
 ];

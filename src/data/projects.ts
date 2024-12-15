@@ -18,6 +18,6 @@ export const projects: Project[] = [
   {
     name: 'Fierros & Bids',
     description: 'A full-stack auction system for automobiles featuring AWS object recognition for automation.',
-    technologies: ['Bootstrap', 'JavaScript', 'Django', 'Amazon Rekognition', 'REST API']
+    technologies: ['Bootstrap', 'JavaScript', 'Django', 'Amazon Rekognition']
   }
 ];

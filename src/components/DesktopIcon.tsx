@@ -13,10 +13,6 @@ const IconWrapper = styled.div`
   user-select: none;
   width: 120px;
   
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
   &:active {
     background: rgba(255, 255, 255, 0.2);
   }

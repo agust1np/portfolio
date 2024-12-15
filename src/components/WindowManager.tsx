@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Window, WindowHeader, WindowContent, Button, Frame, List } from 'react95';
-import { Computer3, FileText, Mmsys101, Progman15, Confcp102, Mail, Mshtml32534 } from '@react95/icons';
-import { SkillType, ProjectType } from '../types';
+import { Window, WindowHeader, WindowContent, Button, Frame, List, ListItem } from 'react95';
+import { Computer3, Progman21, FileText, Unmute, Mail, Mshtml32534, Warning } from '@react95/icons';
+import {SkillType, ProjectType } from '../types';
 import { blogPosts, BlogPost } from '../data/blog';
 
 const WindowWrapper = styled(Window)<{ $isDragging?: boolean; $x?: number; $y?: number }>`
@@ -56,30 +56,61 @@ const DraggableWindow: React.FC<{
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!(e.target as HTMLElement).closest('.window-header')) return;
-
+  const handleStart = (clientX: number, clientY: number) => {
     const rect = windowRef.current?.getBoundingClientRect();
     if (!rect) return;
 
     setIsDragging(true);
     setDragStart({
-      x: e.clientX - (position.x || rect.left),
-      y: e.clientY - (position.y || rect.top)
+      x: clientX - (position.x || rect.left),
+      y: clientY - (position.y || rect.top)
     });
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMove = (clientX: number, clientY: number) => {
     if (!isDragging) return;
 
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
+    const newX = clientX - dragStart.x;
+    const newY = clientY - dragStart.y;
 
     setPosition({ x: newX, y: newY });
   };
 
-  const handleMouseUp = () => {
+  const handleEnd = () => {
     setIsDragging(false);
+  };
+
+  // Mouse Events
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!(e.target as HTMLElement).closest('.window-header')) return;
+    handleStart(e.clientX, e.clientY);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    handleMove(e.clientX, e.clientY);
+  };
+
+  const handleMouseUp = () => {
+    handleEnd();
+  };
+
+  // Touch Events
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!(e.target as HTMLElement).closest('.window-header')) return;
+    const touch = e.touches[0];
+    handleStart(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleMove(touch.clientX, touch.clientY);
+    if (isDragging) {
+      e.preventDefault(); // Prevent scrolling while dragging
+    }
+  };
+
+  const handleTouchEnd = () => {
+    handleEnd();
   };
 
   return (
@@ -92,7 +123,11 @@ const DraggableWindow: React.FC<{
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onMouseLeave={() => isDragging && setIsDragging(false)}
+      onMouseLeave={handleEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleEnd}
     >
       {children}
     </WindowWrapper>
@@ -147,6 +182,41 @@ const ScrollableContent = styled(WindowContent)`
       max-width: 100%;
       height: auto;
     }
+  }
+`;
+
+const BlogScrollContent = styled(WindowContent)`
+  padding: 12px;
+  height: calc(100% - 33px);
+  overflow-y: auto;
+  background: white;
+
+  &::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #dfdfdf;
+    border-left: 1px solid #888888;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+  }
+  
+  &::-webkit-scrollbar-button:single-button {
+    background: #dfdfdf;
+    display: block;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    height: 16px;
+  }
+
+  &::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-position: center 5px;
   }
 `;
 
@@ -432,6 +502,22 @@ const TerminalWindow = () => {
   );
 };
 
+const BlogIconWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
+`;
+
+const BlogIconText = styled.span`
+  margin-top: 8px;
+  font-size: 11px;
+  font-family: ms_sans_serif;
+  word-break: break-word;
+`;
+
 const WindowManager: React.FC<WindowManagerProps> = ({
   openWindows,
   toggleWindow,
@@ -504,38 +590,56 @@ const WindowManager: React.FC<WindowManagerProps> = ({
       )}
 
       {openWindows.projects && (
-        <DraggableWindow style={{ width: '500px' }}>
+        <DraggableWindow style={{ 
+          width: '450px',
+          maxWidth: '95vw',
+          margin: '20px auto'
+        }}>
           <StyledWindowHeader className="window-header">
             <span>Projects.exe</span>
             <Button onClick={() => toggleWindow('projects')}>
               <span>×</span>
             </Button>
           </StyledWindowHeader>
-          <ScrollableContent>
+          <ScrollableContent style={{
+            padding: '8px',
+            maxHeight: '70vh',
+            overflowY: 'auto'
+          }}>
             {projects.map((project, index) => (
               <Frame
                 key={index}
                 variant="field"
-                style={{ padding: '1rem', marginBottom: '1rem' }}
+                style={{ 
+                  padding: '8px', 
+                  marginBottom: '8px',
+                  height: '160px',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
               >
                 <h3 style={{ 
-                  marginBottom: '0.5rem',
+                  margin: '0 0 8px 0',
                   color: '#000080',
                   borderBottom: '2px solid #000080',
-                  paddingBottom: '0.25rem'
+                  paddingBottom: '4px',
+                  fontSize: '14px'
                 }}>
                   {project.name}
                 </h3>
-                <p style={{ marginBottom: '1rem' }}>{project.description}</p>
+                <p style={{ 
+                  margin: '0 0 8px 0', 
+                  fontSize: '12px',
+                  flexGrow: 1
+                }}>{project.description}</p>
                 <div style={{ 
                   display: 'flex', 
                   flexWrap: 'wrap', 
-                  gap: '0.5rem' 
+                  gap: '4px'
                 }}>
                   {project.technologies.map((tech, techIndex) => {
                     let variant = 'primary';
                     
-                    // Asignar variantes según la tecnología
                     if (['Python', 'Django', 'Flask'].includes(tech)) {
                       variant = 'info';
                     } else if (['TensorFlow', 'Scikit-learn', 'Pandas', 'NumPy', 'Matplotlib'].includes(tech)) {
@@ -546,7 +650,7 @@ const WindowManager: React.FC<WindowManagerProps> = ({
                       variant = 'success';
                     } else if (['OpenCV', 'Mediapipe'].includes(tech)) {
                       variant = 'secondary';
-                    } else if (['Amazon Rekognition', 'REST API', 'AWS'].includes(tech)) {
+                    } else if (['Amazon Rekognition', 'AWS'].includes(tech)) {
                       variant = 'tertiary';
                     }
 
@@ -554,6 +658,12 @@ const WindowManager: React.FC<WindowManagerProps> = ({
                       <TechButton
                         key={techIndex}
                         $variant={variant}
+                        style={{ 
+                          fontSize: '13px', 
+                          padding: '4px 8px',
+                          height: 'auto',
+                          margin: '1px'
+                        }}
                       >
                         {tech}
                       </TechButton>
@@ -615,90 +725,127 @@ const WindowManager: React.FC<WindowManagerProps> = ({
       )}
 
       {openWindows.blog && (
-        <DraggableWindow style={{ width: '800px', height: '600px' }}>
+        <DraggableWindow style={{ 
+          width: '500px', 
+          height: 'auto',
+          maxWidth: '95vw',
+          margin: '20px auto'
+        }}>
+          <StyledWindowHeader>
+            <span style={{ fontFamily: 'ms_sans_serif' }}>Blog.txt</span>
+            <div style={{ display: 'flex', gap: '2px' }}>
+              <Button onClick={() => toggleWindow('blog')}>
+                <span>×</span>
+              </Button>
+            </div>
+          </StyledWindowHeader>
+          <div style={{ 
+            background: '#c0c0c0',
+            borderBottom: '1px solid #868686',
+            padding: '2px 6px',
+            display: 'flex',
+            gap: '16px'
+          }}>
+            <span style={{ fontFamily: 'ms_sans_serif' }}>File</span>
+            <span style={{ fontFamily: 'ms_sans_serif' }}>Edit</span>
+            <span style={{ fontFamily: 'ms_sans_serif' }}>Help</span>
+          </div>
+          <div style={{
+            padding: '8px 16px',
+            borderBottom: '1px solid #848584',
+            background: 'white'
+          }}>
+            <p style={{ 
+              textAlign: 'center',
+              color: '#000080',
+              fontSize: '14px',
+              margin: 0
+            }}>
+              Select a project from the left to read its story
+            </p>
+          </div>
+          <WindowContent style={{
+            background: 'white',
+            padding: '16px',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+            gap: '16px',
+            justifyItems: 'center',
+            maxHeight: '300px',
+            '@media (max-width: 480px)': {
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              padding: '8px',
+              gap: '8px'
+            }
+          }}>
+            {blogPosts.map((post, index) => {
+              let Icon;
+              switch (post.project) {
+                case 'Che-Entende':
+                  Icon = Unmute;
+                  break;
+                case 'Smells Fishy':
+                  Icon = Warning;
+                  break;
+                case 'Fierros & Bids':
+                  Icon = Progman21;
+                  break;
+                default:
+                  Icon = FileText;
+              }
+              
+              return (
+                <BlogIconWrapper
+                  key={index}
+                  onClick={() => setCurrentPost(post)}
+                >
+                  <Icon variant="32x32_4" />
+                  <BlogIconText>
+                    {post.project}.txt
+                  </BlogIconText>
+                </BlogIconWrapper>
+              );
+            })}
+          </WindowContent>
+        </DraggableWindow>
+      )}
+
+      {currentPost && (
+        <DraggableWindow style={{ 
+          width: '600px', 
+          height: '500px', 
+          maxWidth: '95vw',
+          maxHeight: '90vh',
+          margin: '20px auto'
+        }}>
           <StyledWindowHeader className="window-header">
-            <span>Blog.exe</span>
-            <Button onClick={() => toggleWindow('blog')}>
+            <span style={{ fontFamily: 'ms_sans_serif' }}>Blog.exe</span>
+            <Button onClick={() => setCurrentPost(null)}>
               <span>×</span>
             </Button>
           </StyledWindowHeader>
-          <ScrollableContent style={{ height: 'calc(100% - 33px)', overflow: 'hidden' }}>
-            <div style={{ 
-              display: 'flex', 
-              height: '100%',
-              gap: '1rem' 
+          <BlogScrollContent>
+            <h2 style={{
+              color: '#000080',
+              fontFamily: 'ms_sans_serif',
+              fontSize: '20px',
+              marginBottom: '12px',
+              paddingBottom: '6px',
+              borderBottom: '1px solid #000080'
             }}>
-              {isSidebarOpen && (
-                <ScrollableFrame 
-                  variant="field" 
-                  style={{ 
-                    width: '200px',
-                    padding: '1rem',
-                    overflowY: 'auto'
-                  }}
-                >
-                  {blogPosts.map(post => (
-                    <Button
-                      key={post.id}
-                      onClick={() => setCurrentPost(post)}
-                      style={{
-                        width: '100%',
-                        marginBottom: '0.5rem',
-                        textAlign: 'left',
-                        padding: '0.5rem'
-                      }}
-                    >
-                      {post.project}
-                    </Button>
-                  ))}
-                </ScrollableFrame>
-              )}
-              <ScrollableFrame 
-                variant="field" 
-                style={{ 
-                  flex: 1,
-                  padding: '1.5rem',
-                  overflowY: 'auto',
-                  position: 'relative'
-                }}
-              >
-                <div style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1rem',
-                  cursor: 'pointer',
-                  opacity: 0.6,
-                  fontSize: '1.2rem'
-                }} onClick={toggleSidebar}>
-                  {isSidebarOpen ? '◀' : '▶'}
-                </div>
-                {currentPost ? (
-                  <>
-                    <h2 style={{ 
-                      fontSize: '1.5rem',
-                      color: '#000080',
-                      marginBottom: '1rem',
-                      borderBottom: '2px solid #000080',
-                      paddingBottom: '0.5rem'
-                    }}>
-                      {currentPost.title}
-                    </h2>
-                    <p style={{ 
-                      whiteSpace: 'normal',
-                      lineHeight: '1.6',
-                      textAlign: 'justify',
-                      margin: '0 1rem'
-                    }}
-                    dangerouslySetInnerHTML={{ __html: currentPost.content }}
-                    >
-                    </p>
-                  </>
-                ) : (
-                  <p>Select a project from the left to read its story.</p>
-                )}
-              </ScrollableFrame>
-            </div>
-          </ScrollableContent>
+              {currentPost.title}
+            </h2>
+            <div
+              style={{
+                fontFamily: 'ms_sans_serif',
+                lineHeight: '1.4',
+                whiteSpace: 'normal',
+                textAlign: 'justify',
+                fontSize: '14px'
+              }}
+              dangerouslySetInnerHTML={{ __html: currentPost.content }}
+            />
+          </BlogScrollContent>
         </DraggableWindow>
       )}
 
@@ -711,9 +858,10 @@ const WindowManager: React.FC<WindowManagerProps> = ({
             width: '200px'
           }}
         >
-          <List.Item icon={<Computer3 variant="16x16_4" />} onClick={() => window.location.reload()}>
+          <ListItem onClick={() => window.location.reload()}>
+            <Computer3 variant="16x16_4" style={{ marginRight: 8 }} />
             Restart...
-          </List.Item>
+          </ListItem>
         </List>
       )}
     </>
