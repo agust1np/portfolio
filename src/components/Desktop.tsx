@@ -15,7 +15,7 @@ const DesktopWrapper = styled.div`
   background: ${({ theme }) => theme.desktopBackground};
   position: relative;
   overflow: hidden;
-  background-image: url('/imagen.jpg');
+  background-image: url('/portfolio/imagen.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,5 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import { useClippy } from '@react95/clippy';
+import styled from 'styled-components';
+
+const ClippyContainer = styled.div`
+  position: fixed !important;
+  right: 100px !important;
+  bottom: 60px !important;
+  z-index: 9999;
+  pointer-events: none !important;
+
+  & > div {
+    position: static !important;
+    pointer-events: none !important;
+    transform: none !important;
+    
+    & * {
+      pointer-events: none !important;
+    }
+  }
+`;
 
 const MESSAGES = [
   "Welcome to my retro portfolio!",
@@ -30,36 +49,10 @@ const Assistant: React.FC = () => {
       return;
     }
 
-    element.style.position = 'fixed';
-    element.style.right = '100px';
-    element.style.bottom = '60px';
-    element.style.cursor = 'grab';
-    element.style.zIndex = '9999';
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDraggingRef.current = true;
-      const rect = element.getBoundingClientRect();
-      const offset = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-      element.style.cursor = 'grabbing';
-
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!isDraggingRef.current) return;
-        element.style.left = `${e.clientX - offset.x}px`;
-        element.style.top = `${e.clientY - offset.y}px`;
-      };
-
-      const handleMouseUp = () => {
-        isDraggingRef.current = false;
-        element.style.cursor = 'grab';
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    };
-
-    element.addEventListener('mousedown', handleMouseDown);
+    const container = document.createElement('div');
+    container.className = 'clippy-container';
+    element.parentElement?.insertBefore(container, element);
+    container.appendChild(element);
 
     const showRandomMessage = () => {
       if (!clippy || !hasInitialized.current) return;
@@ -77,8 +70,6 @@ const Assistant: React.FC = () => {
         messageIntervalRef.current = null;
       }
 
-      element?.removeEventListener('mousedown', handleMouseDown);
-
       if (clippy) {
         clippy.hide(true, () => {});
       }
@@ -87,7 +78,7 @@ const Assistant: React.FC = () => {
     };
   }, [clippy]);
 
-  return null;
+  return <ClippyContainer className="clippy-container" />;
 };
 
 export default Assistant;
