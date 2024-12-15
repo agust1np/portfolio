@@ -4,6 +4,7 @@ import original from "react95/dist/themes/original";
 import Desktop from './components/Desktop';
 import Assistant from './components/Assistant';
 import { ClippyProvider, AGENTS } from '@react95/clippy';
+import { GlobalStyle } from './styles/global';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -32,6 +33,7 @@ function App() {
   return (
     <ThemeProvider theme={original}>
       <GlobalStyles />
+      <GlobalStyle />
       <ClippyProvider agentName={AGENTS.GENIUS}>
         <Desktop />
         <Assistant />

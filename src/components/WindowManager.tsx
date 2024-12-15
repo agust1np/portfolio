@@ -713,11 +713,11 @@ const WindowManager: React.FC<WindowManagerProps> = ({
             <Frame variant="field" style={{ padding: '1rem' }}>
               <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Mail variant="32x32_4" />
-                <p>Email: <a href="mailto:agustin.swe@gmail.com">agustin.swe@gmail.com</a></p>
+                <p>Email: <a href="mailto:agustin.swe@gmail.com" style={{ color: '#0000FF', textDecoration: 'underline', cursor: 'pointer' }}>agustin.swe@gmail.com</a></p>
               </div>
               <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Mshtml32534 variant="32x32_4" />
-                <p>LinkedIn: <a href="https://www.linkedin.com/in/agustin-p-3b544432a" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/agustin-p-3b544432a</a></p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/agustin-p-3b544432a" target="_blank" rel="noopener noreferrer" style={{ color: '#0000FF', textDecoration: 'underline', cursor: 'pointer' }}>www.linkedin.com/in/agustin-p-3b544432a</a></p>
               </div>
             </Frame>
           </ScrollableContent>
@@ -761,7 +761,7 @@ const WindowManager: React.FC<WindowManagerProps> = ({
               fontSize: '14px',
               margin: 0
             }}>
-              Select a project from the left to read its story
+              Select a project from the bottom to read its story
             </p>
           </div>
           <WindowContent style={{

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AppBar, Toolbar, Button, MenuList, MenuListItem } from 'react95';
-import { Computer3, FileText, Mmsys101, Progman15, Confcp102 } from '@react95/icons';
+import { Computer3, FileText, Mmsys101, Progman15, Confcp102, Explorer100 } from '@react95/icons';
 import DesktopIcon from './DesktopIcon';
 import WindowManager from './WindowManager';
 import TaskBarItem from './TaskBarItem';
@@ -11,14 +11,17 @@ import { projects } from '../data/projects';
 import Clock from './Clock';
 
 const DesktopWrapper = styled.div`
-  height: 100vh;
-  background: ${({ theme }) => theme.desktopBackground};
-  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
-  background-image: url('/portfolio/imagen.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #008080;
 `;
 
 const IconsContainer = styled.div`
@@ -93,6 +96,11 @@ const Desktop: React.FC = () => {
 
   const handleStartClick = () => {
     setShowStartMenu(!showStartMenu);
+  };
+
+  const openGitHub = () => {
+    window.open('https://github.com/agust1np', '_blank');
+    setShowStartMenu(false);
   };
 
   // Helper function to get icon for window
@@ -186,11 +194,15 @@ const Desktop: React.FC = () => {
                     bottom: '100%',
                   }}
                 >
+                  <MenuListItem onClick={openGitHub}>
+                    <span style={{ marginRight: '8px' }}><Explorer100 variant="32x32_4" /></span>
+                    GitHub Profile
+                  </MenuListItem>
                   <MenuListItem onClick={() => window.location.reload()}>
                     <img
                       src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-4.png"
                       alt="shutdown"
-                      style={{ marginRight: 8, width: 20, height: 20 }}
+                      style={{ marginRight: 8, width: 32, height: 32 }}
                     />
                     Restart
                   </MenuListItem>

@@ -40,7 +40,13 @@ export const blogPosts: BlogPost[] = [
     who could now communicate more freely, in the possibilities we opened for future innovations, 
     and in the reminder that technology is at its best when it serves humanity.
 
-    <img src="/portfolio/blog-media/premiacion.jpg" alt="Award Ceremony" style="width:100%;margin:1rem 0;"/>`
+    <img src="/portfolio/blog-media/premiacion.jpg" alt="Award Ceremony" style="width:100%;margin:1rem 0;"/>
+
+    Our innovative approach to bridging communication gaps caught the attention of local media, 
+    and we were featured in a prominent web portal that highlighted the project's potential impact 
+    on the deaf community in Bolivia.
+
+    <img src="/portfolio/blog-media/destacado.png" alt="News Feature" style="width:100%;margin:1rem 0;"/>`
   },
   {
     id: 'smells-fishy',
@@ -74,6 +80,12 @@ export const blogPosts: BlogPost[] = [
     handles user authentication and maintains bid synchronization across all active sessions. 
 
     <img src="/portfolio/blog-media/cars auctions.jpg" alt="Auction Interface" style="width:100%;margin:1rem 0;"/>
+
+    The real-time bidding system was designed to handle multiple concurrent users, providing 
+    a seamless and engaging auction experience. Here's a look at the live bidding interface 
+    in action:
+
+    <img src="/portfolio/blog-media/pujas.png" alt="Live Bidding" style="width:100%;margin:1rem 0;"/>
 
     While the platform successfully demonstrates the core auction functionality, future 
     implementation plans include integrating a payment gateway. This feature is currently 

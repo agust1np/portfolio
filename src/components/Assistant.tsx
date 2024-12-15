@@ -23,7 +23,7 @@ const ClippyContainer = styled.div`
 const MESSAGES = [
   "Welcome to my retro portfolio!",
   "Want to see my projects? Click on Projects.exe!",
-  "You can find my skills in the Control Panel!",
+  "You can find my skills in Skills.exe!",
   "Feel free to contact me through Contact.exe!",
   "Want to know more about me? Open About Me.txt!",
   "You can drag me around the screen!",
