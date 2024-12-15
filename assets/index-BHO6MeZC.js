@@ -2224,13 +2224,22 @@ input[type="number"] {
   border-left: 2px solid #888;
 `,gx=()=>{const[e,t]=y.useState(new Date);return y.useEffect(()=>{const n=setInterval(()=>{t(new Date)},1e3);return()=>clearInterval(n)},[]),E.jsx(px,{children:e.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})})},vx=k.div`
   height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   background: ${({theme:e})=>e.desktopBackground};
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
   background-image: url('/portfolio/imagen.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 `,yx=k.div`
   display: flex;
   flex-direction: column;
