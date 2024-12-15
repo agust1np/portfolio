@@ -1964,6 +1964,8 @@ input[type="number"] {
     width: 95vw !important;
     height: auto;
     max-height: 80vh;
+    top: 25% !important;
+    transform: translate(-50%, 0) !important;
   }
 `,Wn=k(ku)`
   background-color: #053576;
