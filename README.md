@@ -2,7 +2,7 @@
 
 A retro-styled personal portfolio website built with React and styled to look like Windows 95. This project showcases my work, skills, and experiences through a nostalgic user interface.
 
-![Portfolio Preview](imagen.jpg)
+![Portfolio Preview](public/main.png)
 
 ## 🚀 Features
 
