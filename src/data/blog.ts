@@ -60,7 +60,7 @@ export const blogPosts: BlogPost[] = [
     <img src="/portfolio/blog-media/phishing.png" alt="Phishing Detection" style="width:100%;margin:1rem 0;"/>
 
     The project served as my valuable introduction to Python libraries and machine learning concepts. 
-    Using Django and Scikit-learn, I built a system that attempts to identify suspicious URLs. 
+    Using Flask and Scikit-learn, I built a system that attempts to identify suspicious URLs. 
     While no solution can guarantee perfect protection, this experience enhanced my understanding 
     of both cybersecurity challenges and the practical implementation of machine learning solutions.`
   },

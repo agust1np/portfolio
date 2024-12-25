@@ -396,7 +396,7 @@ const commands = [
     ]
   },
   {
-    command: 'dir /Frameworks',
+    command: 'dir /Frameworks & Libraries',
     output: [
       { text: 'React', color: '#61dafb' },
       { text: 'Django', color: '#44B78B' },
@@ -410,6 +410,9 @@ const commands = [
       { text: 'Git', color: '#f05032' },
       { text: 'Linux', color: '#fcc624' },
       { text: 'PostgreSQL', color: '#336791' },
+      { text: 'Docker', color: '#2496ed' },
+      { text: 'AWS', color: '#ff9900' },
+
     ]
   }
 ];

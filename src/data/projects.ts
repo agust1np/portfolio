@@ -13,7 +13,7 @@ export const projects: Project[] = [
   {
     name: 'Smells Fishy',
     description: 'A URL phishing detection system utilizing machine learning algorithms for classification.',
-    technologies: ['Django', 'Python', 'Scikit-learn', 'Pandas', 'NumPy']
+    technologies: ['Flask', 'Python', 'Scikit-learn', 'Pandas', 'NumPy']
   },
   {
     name: 'Fierros & Bids',
