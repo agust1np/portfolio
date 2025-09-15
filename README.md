@@ -75,21 +75,9 @@ This portfolio is configured for deployment on GitHub Pages. Follow these steps 
 3. **Content**: Edit components in `src/components/`
 4. **Icons**: Add or modify desktop icons in `src/data/icons.ts`
 
-## 📝 License
+
 
 This project is open source and available under the MIT License.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/windows95-portfolio/issues).
-
-## 👨‍💻 Author
-
-- Your Name
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourusername)
-- GitHub: [@yourusername](https://github.com/yourusername)
-
-## 🙏 Acknowledgments
 
 - [React95](https://github.com/arturbien/React95) for the amazing Windows 95 components
 - Microsoft for the original Windows 95 design inspiration
