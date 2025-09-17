@@ -68,8 +68,6 @@ This portfolio is configured for deployment on GitHub Pages. Follow these steps 
    npm run deploy
    ```
 
-## 🎨 Customization
-
 1. **Personal Information**: Update `src/data/` files with your information
 2. **Styling**: Modify theme colors in `src/App.tsx`
 3. **Content**: Edit components in `src/components/`
