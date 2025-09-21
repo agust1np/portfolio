@@ -4,7 +4,7 @@ A retro-styled personal portfolio website built with React and styled to look li
 
 ![Portfolio Preview](public/main.png)
 
-## 🚀 Features
+## Features
 
 - **Windows 95 UI**: Authentic Windows 95 look and feel using React95 components
 - **Interactive Desktop**: Clickable icons and draggable windows
@@ -15,7 +15,7 @@ A retro-styled personal portfolio website built with React and styled to look li
 - **Contact Information**: Easy-to-find contact details
 - **Skills Terminal**: Command-line style skills display
 
-## 🛠️ Built With
+## Built With
 
 - [React](https://reactjs.org/) - Frontend framework
 - [React95](https://github.com/arturbien/React95) - Windows 95 style UI components
@@ -23,7 +23,7 @@ A retro-styled personal portfolio website built with React and styled to look li
 - [Styled Components](https://styled-components.com/) - Styling
 - [Vite](https://vitejs.dev/) - Build tool and development server
 
-## 📦 Installation
+## Installation
 
 1. Clone the repository:
    ```bash
@@ -41,7 +41,7 @@ A retro-styled personal portfolio website built with React and styled to look li
    npm run dev
    ```
 
-## 🚀 Deployment
+## Deployment
 
 This portfolio is configured for deployment on GitHub Pages. Follow these steps to deploy:
 
